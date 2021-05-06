@@ -1,9 +1,10 @@
 # PAT-Data-Formatter
 Formatting program for PAT data for SEQSDA schools
 
+Takes PAT data for a given subject and splits it into year groups, and renames the file to a more human readable form
+
 
 USAGE:
-
-Place PAT-Data.formatter.py in the same directory as the PAT files to be formatted and run.
-All the new files will be created in the same directory as the original files.
-Original files will remain untouched.
+Place PAT-Formatter in the same file as the excel files from SEQTA.
+Execute the program, and files will be created in the same directory as the the original files.
+Original files will remain unmodified.
