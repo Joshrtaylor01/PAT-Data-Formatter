@@ -58,6 +58,7 @@ def make_seperate_csvs(year_groups, file):
 
 
 def main():
+    print("Searching for files")
     file_list = get_xlsx_files()
     print(f"Found {len(file_list)} files")
     for file in file_list:
@@ -66,7 +67,7 @@ def main():
         make_seperate_csvs(year_groups, file)
         print(f"Successfully formatted {file}")
         print()
-
+    input()
 
 if __name__ == "__main__":
     main()
