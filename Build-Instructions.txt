@@ -13,3 +13,10 @@ Because of this, if building main-verbose.py, using the -w option will just crea
 Create a single file executable
 pyinstaller -F -w --clean -n PAT-Formatter main.py
 pyinstaller -F --clean -n PAT-Formatter main-verbose.py
+
+
+If UPX is installed may have to specify path as sometimes it doesn't automatically search your $PATH
+pyinstaller -F --upx-dir path/to/upx/ -w -n PAT-Formatter main.py
+
+Some optimisation can be made using the following command, not sure how much it does but makes the file smaller
+python -O -m PyInstaller -F --upx-dir C:\Users\Josh\upx-3.96-win64\upx-3.96-win64 -w -n PAT-Formatter-UPX-O-E main.py
