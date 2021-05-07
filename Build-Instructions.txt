@@ -1,0 +1,15 @@
+Following directions requrie PyInstaller to be installed on system.
+This guide assumes some knowledge of this program
+Further documenation can be found at https://pyinstaller.readthedocs.io/en/stable/usage.html
+This can be used if you wish to edit the source code and rebuild an executable with more optimization
+
+
+Note:
+Two version of the code exist. 
+main.py includes no output to the terminal and is most likely what majority of end users will want.
+main-verbose.py does include some basic output stating what is happening, and might be interesting for some.
+Because of this, if building main-verbose.py, using the -w option will just create a slightly larger and slower file for no real gain
+
+Create a single file executable
+pyinstaller -F -w --clean -n PAT-Formatter main.py
+pyinstaller -F --clean -n PAT-Formatter main-verbose.py
