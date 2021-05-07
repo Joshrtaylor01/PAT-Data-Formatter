@@ -19,4 +19,4 @@ If UPX is installed may have to specify path as sometimes it doesn't automatical
 pyinstaller -F --upx-dir path/to/upx/ -w -n PAT-Formatter main.py
 
 Some optimisation can be made using the following command, not sure how much it does but makes the file smaller
-python -O -m PyInstaller -F --upx-dir C:\Users\Josh\upx-3.96-win64\upx-3.96-win64 -w -n PAT-Formatter-UPX-O-E main.py
+python -O -m PyInstaller -F --upx-dir path/to/upx -w -n PAT-Formatter main.py
