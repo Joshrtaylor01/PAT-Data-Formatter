@@ -1,28 +1,49 @@
-Following directions requrie PyInstaller to be installed on system.
-This guide assumes some knowledge of this program
+If editting and redistributing the program to users on your system who do not have all of the 
+required python packages installed on their device, or have no python installation at all, 
+creating a single file executable will save a lot of time in ensure the program works across 
+multiple devices.
+
+PyInstaller is an amazing way of doing this, and is what was used to create the executables 
+provided. The rest of this document will assume that this module has been installed.
 Further documenation can be found at https://pyinstaller.readthedocs.io/en/stable/usage.html
-This can be used if you wish to edit the source code and rebuild an executable with more optimization
+
+UPX is also recommended if you plan on distributing this program, as it helps to reduce the
+end file size. Link to download and for further info can be found at https://upx.github.io/ 
+
+In order to make an executable, the required modules will need to be present on your devices.
+I have tried to use as many standard libary functions as possible for this, but unfortunately 
+an .xlsx parser and data analysis are not something I have the knowledge or the patience for 
+to be able to code from scratch. Therefore, the numpy and pandas libaries will need to be
+installed. For reasons beyond my comprehension, sometimes openpyxl will need to be installed 
+as well and isn't included in the main pandas libary.
+
+A word of advice is to make sure the program runs on your computer before trying to make an 
+executable. This will show any modules that may be missing and can prevent a lot of issues
+down the track.
+
+Commands:
+> pyinstaller -F --clean -n PAT-Formatter main.py
+
+This will make a single file executable that can be distrubuted. This should really be used
+as a last resort if none of the other commands work, as this will include a lot of extra modules 
+that don't get used at all and just waste space. If you are the type of person who is reading
+this then you will likely have multiple modules installed
+
+> pyinstaller -F --upx-dir path\to\upx\ -n PAT-Formatter main.py
+
+Sometimes PyInstaller can't quite find the path to UPX, so you need to give it a little help
 
 
-Note:
-Two version of the code exist. 
-main.py includes no output to the terminal and is most likely what majority of end users will want.
-main-verbose.py does include some basic output stating what is happening, and might be interesting for some.
-Because of this, if building main-verbose.py, using the -w option will just create a slightly larger and slower file for no real gain
+> python -O -m PyInstaller -F --upx-dir path\to\upx -n PAT-Formatter main.py
 
-Create a single file executable
-pyinstaller -F -w --clean -n PAT-Formatter main.py
-pyinstaller -F --clean -n PAT-Formatter main-verbose.py
+Some optimisation can be made using the this command, not sure how much it does but it makes
+the file smaller
 
+> python -O -m PyInstaller -F --upx-dir path\to\upx -n --exclude-module MODULE_NAME PAT-Formatter main.py
 
-If UPX is installed may have to specify path as sometimes it doesn't automatically search your $PATH
-pyinstaller -F --upx-dir path/to/upx/ -w -n PAT-Formatter main.py
-
-Some optimisation can be made using the following command, not sure how much it does but makes the file smaller
-python -O -m PyInstaller -F --upx-dir path/to/upx -w -n PAT-Formatter main.py
-
-
-If your system has a lot of python modules installed, it is worth using the --exclude-module flag to reduce the end size of the file.
-In my experimentation the following packages can be removed and not affect fucntion
-['scipy', 'matplotlib', 'tkinter', 'multiprocessing']
-I'm sure there are more, but removing these made the file small enough for GitHub to allow me to upload.
+This really should be done as it can dramatically reduced the file size (I was able to reduce from
+an inital 70MB down to 23MB). Using this method can be tedious when you have many packages to remove,
+so it may be easier for you to edit the .SPEC file instead, but once again if you're the type of person
+reading this you are probably already doing that. Play around with what modules you can remove to 
+reduce the file size while still having a executable that works. In my testing I found that matplotlib,
+scipy and tkinter are all safe to remove and help to bring the file size down.
