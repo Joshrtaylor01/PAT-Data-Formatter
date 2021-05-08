@@ -22,24 +22,24 @@ executable. This will show any modules that may be missing and can prevent a lot
 down the track.
 
 Commands:
-> pyinstaller -F --clean -n PAT-Formatter main.py
+  > pyinstaller -F --clean -n PAT-Formatter main.py
 
 This will make a single file executable that can be distrubuted. This should really be used
 as a last resort if none of the other commands work, as this will include a lot of extra modules 
 that don't get used at all and just waste space. If you are the type of person who is reading
 this then you will likely have multiple modules installed
 
-> pyinstaller -F --upx-dir path\to\upx\ -n PAT-Formatter main.py
+  > pyinstaller -F --upx-dir path\to\upx\ -n PAT-Formatter main.py
 
 Sometimes PyInstaller can't quite find the path to UPX, so you need to give it a little help
 
 
-> python -O -m PyInstaller -F --upx-dir path\to\upx -n PAT-Formatter main.py
+  > python -O -m PyInstaller -F --upx-dir path\to\upx -n PAT-Formatter main.py
 
 Some optimisation can be made using the this command, not sure how much it does but it makes
 the file smaller
 
-> python -O -m PyInstaller -F --upx-dir path\to\upx -n --exclude-module MODULE_NAME PAT-Formatter main.py
+  > python -O -m PyInstaller -F --upx-dir path\to\upx -n --exclude-module MODULE_NAME PAT-Formatter main.py
 
 This really should be done as it can dramatically reduced the file size (I was able to reduce from
 an inital 70MB down to 23MB). Using this method can be tedious when you have many packages to remove,
