@@ -52,11 +52,39 @@ def make_seperate_csvs(year_groups, file):
             csv_writer.writerows(year_groups[year_group])
 
 
+def five_number_summary(year_groups, file):
+    for year_group in year_groups.keys():
+        scores = []
+        for student in year_groups[year_group]:
+            # Score is in the 4th row, adds it to score
+            scores.append(float(student[3]))
+        quartiles = percentile(scores, [25, 50, 75])
+        scores.sort()
+        min, max = scores[0], scores[-1]
+        five_num_sum = [min, quartiles[0], quartiles[1], quartiles[2], max]
+        # Saves creating a new dict, update the old one with new data
+        # Means I can reuse some code
+        five_num_sum.insert(0, year_group)
+        year_groups.update({year_group: five_num_sum})
+    # This is argueably the most convoluted way to do this but the final csv
+    # needs to be in order, so yeah, it works and thats all.
+    year_groups = dict(sorted(year_groups.items(), key=lambda item: int(item[0][4:])))
+    file = file[:22] + "five-num-sum"
+    header = ["Year Group", "Min", "Q1", "Median", "Q2", "Max"]
+    # print(year_groups)
+    with open(f"{file}.csv", mode="w", newline="") as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=",")
+        csv_writer.writerow(header)
+        for year_group in year_groups.keys():
+            csv_writer.writerow(year_groups[year_group])
+
+
 def main():
     file_list = get_xlsx_files()
     for file in file_list:
         year_groups = create_year_groups(file)
         make_seperate_csvs(year_groups, file)
+        five_number_summary(year_groups, file)
 
 
 if __name__ == "__main__":
