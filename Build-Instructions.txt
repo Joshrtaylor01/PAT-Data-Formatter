@@ -20,3 +20,9 @@ pyinstaller -F --upx-dir path/to/upx/ -w -n PAT-Formatter main.py
 
 Some optimisation can be made using the following command, not sure how much it does but makes the file smaller
 python -O -m PyInstaller -F --upx-dir path/to/upx -w -n PAT-Formatter main.py
+
+
+If your system has a lot of python modules installed, it is worth using the --exclude-module flag to reduce the end size of the file.
+In my experimentation the following packages can be removed and not affect fucntion
+['scipy', 'matplotlib', 'tkinter', 'multiprocessing']
+I'm sure there are more, but removing these made the file small enough for GitHub to allow me to upload.
