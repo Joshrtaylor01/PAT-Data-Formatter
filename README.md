@@ -1,7 +1,7 @@
 # PAT-Data-Formatter
 Formatting program for PAT data for SEQSDA schools
 
-Takes PAT data for a given subject and splits it into year groups, and renames the file to a more human readable form
+Takes PAT data for a given subject and splits it into year groups and generates a five number summary of the scores.
 
 
 USAGE:
