@@ -1,6 +1,6 @@
 import csv
 import os
-import pandas as pd
+import openpyxl
 from numpy import percentile
 
 
@@ -20,26 +20,33 @@ def shorten_file_name(file):
     # Quick and dirty way to make the file name nice to look at
     temp = file.split("-")
     file = temp[0] + "-" + temp[2] + "-" + temp[3] + "-" + temp[4]
-    return file    
+    return file
 
 
 def create_year_groups(file):
     # Im certain there is a more effective way to do this but
     # I refuse to learn more about .xlsx reading in python
-    
-    read_file = pd.read_excel(f"{file}.xlsx", skiprows=6)
+    print("Converting from .xlsx to .csv")
+    read_file = openpyxl.load_workbook(f"{file}.xlsx")
     file = shorten_file_name(file)
-    read_file.to_csv(f"{file}.csv", index=None)
+    sheet = read_file.active
+    with open(f"{file}.csv", mode="w", newline="") as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=",")
+        for row in sheet.rows:
+            csv_writer.writerow([cell.value for cell in row])
 
     year_groups = dict()
     with open(f"{file}.csv", mode="r") as csv_file:
         csv_data = csv.reader(csv_file, delimiter=",")
-        # Skips the first line and makes it the header
+        # Skips the first few lines as they just mess everything up
+        for i in range(6):
+            next(csv_data)
+        # Assigns the first row of data as the header
         header = next(csv_data)
         for row in csv_data:
             if row[9] not in year_groups:
                 # If the current students year group is not in the dict add it
-                year_groups.update({row[9]: [] })
+                year_groups.update({row[9]: []})
             year_groups[row[9]] += [row]
 
     print(f"Found data for {len(year_groups.keys())} year groups")
@@ -68,7 +75,7 @@ def make_seperate_csvs(year_groups, file):
 
 def five_number_summary(year_groups, file):
     for year_group in year_groups.keys():
-        scores = [] 
+        scores = []
         for student in year_groups[year_group]:
             # Score is in the 4th row, adds it to score
             scores.append(float(student[3]))
@@ -102,8 +109,7 @@ def main():
     for file in file_list:
         print(f"Formating {file}")
         year_groups = create_year_groups(file)
-        temp = file.split("-")
-        file = temp[0] + "-" + temp[2] + "-" + temp[3] + "-" + temp[4]       
+        file = shorten_file_name(file)
         make_seperate_csvs(year_groups, file)
         five_number_summary(year_groups, file)
         print(f"Successfully formatted {file}")
