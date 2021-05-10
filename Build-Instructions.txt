@@ -13,9 +13,8 @@ end file size. Link to download and for further info can be found at https://upx
 In order to make an executable, the required modules will need to be present on your devices.
 I have tried to use as many standard libary functions as possible for this, but unfortunately 
 an .xlsx parser and data analysis are not something I have the knowledge or the patience for 
-to be able to code from scratch. Therefore, the numpy and pandas libaries will need to be
-installed. For reasons beyond my comprehension, sometimes openpyxl will need to be installed 
-as well and isn't included in the main pandas libary.
+to be able to code from scratch. Therefore, the numpy and the openpyxl libaries will need to be
+installed.
 
 A word of advice is to make sure the program runs on your computer before trying to make an 
 executable. This will show any modules that may be missing and can prevent a lot of issues
@@ -46,4 +45,4 @@ an inital 70MB down to 23MB). Using this method can be tedious when you have man
 so it may be easier for you to edit the .SPEC file instead, but once again if you're the type of person
 reading this you are probably already doing that. Play around with what modules you can remove to 
 reduce the file size while still having a executable that works. In my testing I found that matplotlib,
-scipy and tkinter are all safe to remove and help to bring the file size down.
+scipy, pandas and tkinter are all safe to remove and help to bring the file size down.
